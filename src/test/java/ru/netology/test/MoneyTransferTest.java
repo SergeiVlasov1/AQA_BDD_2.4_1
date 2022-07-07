@@ -24,42 +24,45 @@ public class MoneyTransferTest {
 
     @Test
     void shouldTransferMoneyFromFirstCardToSecond() {
+        val dashboardPage = new DashboardPage();
         int amount = 4000;
-        int firstCardBalance = DashboardPage.getFirstCardBalance();
-        int secondCardBalance = DashboardPage.getSecondCardBalance();
-        var transferPage = DashboardPage.secondCard();
+        int firstCardBalance = dashboardPage.getFirstCardBalance();
+        int secondCardBalance = dashboardPage.getSecondCardBalance();
+        var transferPage = dashboardPage.secondCard();
         var cardInfo = Data.getFirstCardInfo();
         transferPage.transferCard(cardInfo, amount);
         int firstCardAfterTransferBalance = Data.decreaseBalance(firstCardBalance, amount);
         int secondCardAfterTransferBalance = Data.increaseBalance(secondCardBalance, amount);
-        int firstCardBalanceAfter = DashboardPage.getFirstCardBalance();
-        int secondCardBalanceAfter = DashboardPage.getSecondCardBalance();
+        int firstCardBalanceAfter = dashboardPage.getFirstCardBalance();
+        int secondCardBalanceAfter = dashboardPage.getSecondCardBalance();
         assertEquals(firstCardAfterTransferBalance, firstCardBalanceAfter);
         assertEquals(secondCardAfterTransferBalance, secondCardBalanceAfter);
     }
 
     @Test
     void shouldTransferMoneyFromSecondCardToFirst() {
+        val dashboardPage = new DashboardPage();
         int amount = 4000;
-        int firstCardBalance = DashboardPage.getFirstCardBalance();
-        int secondCardBalance = DashboardPage.getSecondCardBalance();
-        var transferPage = DashboardPage.firstCard();
+        int firstCardBalance = dashboardPage.getFirstCardBalance();
+        int secondCardBalance = dashboardPage.getSecondCardBalance();
+        var transferPage = dashboardPage.firstCard();
         var cardInfo = Data.getSecondCardInfo();
         transferPage.transferCard(cardInfo, amount);
         int firstCardAfterTransferBalance = Data.increaseBalance(firstCardBalance, amount);
         int secondCardAfterTransferBalance = Data.decreaseBalance(secondCardBalance, amount);
-        int firstCardBalanceAfter = DashboardPage.getFirstCardBalance();
-        int secondCardBalanceAfter = DashboardPage.getSecondCardBalance();
+        int firstCardBalanceAfter = dashboardPage.getFirstCardBalance();
+        int secondCardBalanceAfter = dashboardPage.getSecondCardBalance();
         assertEquals(firstCardAfterTransferBalance, firstCardBalanceAfter);
         assertEquals(secondCardAfterTransferBalance, secondCardBalanceAfter);
     }
 
     @Test
     void shouldNotTransferMoneyAndShowErrorWhenAmountIsMoreThanAvailableBalance() {
+        val dashboardPage = new DashboardPage();
         int amount = 11000;
-        DashboardPage.getFirstCardBalance();
-        DashboardPage.getSecondCardBalance();
-        var transferPage = DashboardPage.firstCard();
+        dashboardPage.getFirstCardBalance();
+        dashboardPage.getSecondCardBalance();
+        var transferPage = dashboardPage.firstCard();
         var cardInfo = Data.getSecondCardInfo();
         transferPage.transferCard(cardInfo, amount);
         transferPage.transferMoneyError();
